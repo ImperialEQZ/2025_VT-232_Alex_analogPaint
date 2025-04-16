@@ -1,0 +1,9 @@
+D:/QT Project/PaintAnalog/build/gcc-Debug/CMakeFiles/PaintAnalog.dir
+D:/QT Project/PaintAnalog/build/gcc-Debug/CMakeFiles/edit_cache.dir
+D:/QT Project/PaintAnalog/build/gcc-Debug/CMakeFiles/rebuild_cache.dir
+D:/QT Project/PaintAnalog/build/gcc-Debug/CMakeFiles/list_install_components.dir
+D:/QT Project/PaintAnalog/build/gcc-Debug/CMakeFiles/install.dir
+D:/QT Project/PaintAnalog/build/gcc-Debug/CMakeFiles/install/local.dir
+D:/QT Project/PaintAnalog/build/gcc-Debug/CMakeFiles/install/strip.dir
+D:/QT Project/PaintAnalog/build/gcc-Debug/CMakeFiles/PaintAnalog_autogen_timestamp_deps.dir
+D:/QT Project/PaintAnalog/build/gcc-Debug/CMakeFiles/PaintAnalog_autogen.dir
