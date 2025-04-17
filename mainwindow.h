@@ -3,14 +3,7 @@
 
 #include <QMainWindow>
 #include <QList>
-
-class DrawingArea;//"холст" программы
-
-QT_BEGIN_NAMESPACE
-namespace Ui {
-class MainWindow;
-}
-QT_END_NAMESPACE
+#include "DrawingArea.h"
 
 class MainWindow : public QMainWindow
 {
@@ -18,43 +11,39 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
-
-private:
-    Ui::MainWindow *ui;
 
 protected:
-    void endEvent(QCloseEvent *event) override;//функция, завершающая события
-
+    void closeEvent(QCloseEvent *event) override;//функция, завершающая события
 
 private slots://Возможные события, список "слотов"
     void open();
     void save();
-    void changePenColor();
-    void changePenWidth();
-    void aboutPaintAnalog();
+    void penColor();
+    void penWidth();
+    void about();
 
 private://Действия пользователя
     void createActions();//создать действие
-    void createMenu();//меню с разными событиями
-    bool saveFile(const QByteArray &formatFile);//сохранить в выбранном формате
+    void createMenus();//меню с разными событиями
+    bool saveFile(const QByteArray &fileFormat);//сохранить в выбранном формате
     bool abilitySave();//Возможность сохранить файл
 
-    DrawingArea *DrawingArea;
+
+    DrawingArea *drawingArea;
 //Список виджетов-меню
     QMenu *saveAs;//сохранить файл как
-    QMenu *menuFile;//
-    QMenu *menuOption;//меню параметров (пример, смена цвета)
-    QMenu *menuHelp;//меню о программе PaintAnalog
+    QMenu *menuFile;//Открыть как, сохранить как, выйти
+    QMenu *menuOption;//смена цвета, ширины пера, очистить холст
+    QMenu *menuHelp;//О приложении PaintAnalog
 
     QAction *openActions;//Доступные действия
 
     QList<QAction *> saveAsActions;//список действий
     QAction *penColorActions;//изменить цвет пера
-    QAction *printActions;//печать
+    QAction *printActions;//"печать"
+    QAction *exitAct;//Добавил, действие выхода из программы
     QAction *penWidthActions;//изменить ширину пера
     QAction *clearAreaActions;//очистить холст
-    QAction *aboutActions;//открытие диалогового окна
-
+    QAction *aboutActions;//открытие диалогового окна "О программе"
 };
 #endif // MAINWINDOW_H

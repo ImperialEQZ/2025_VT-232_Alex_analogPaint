@@ -5,53 +5,57 @@
 #include <QImage>
 #include <QPoint>
 #include <QWidget>
+#include <QMouseEvent>
+#include <QPaintEvent>
+#include <QResizeEvent>
+#include <QSize>
 
-class PaintArea : public QWidget {
+class DrawingArea : public QWidget
+{
     Q_OBJECT
-private:
-    void drawTo(const QPoint &endPoint);
-    void resizeImage(QImage *image, QSize &newSize);//изменить размер содержимого
-    bool modified;//Изменено ли состояние
-    bool area;//Рисует ли пользователь на поверхности или нет
-    QColor PenColor;//цвет пера
-    QImage image;//картина, которую пользователь нарисовал
-    QPoint endPoint;//последняя позиция мыши
+
 public:
-    PaintArea(QWidget *ancestor = 0);//создание виджета с холстом для рисования
+    DrawingArea(QWidget *parent = nullptr);//создание виджета с холстом для рисования
     //Обработка различных событий в этом виджете
     bool openImage(const QString &fileName);
-    bool saveFile(const QString &fileName, const char &fileFormat);
+    bool saveImage(const QString &fileName, const char *fileFormat);
     void setPenColor(const QColor &newColor);
     void setPenWidth(int newWidth);
     //произошли ли изменения?
     bool isModified() const {
         return modified;
     }
-    //возврат ширины
-    int penWidth() {
-        return selectedPenWidth;
-    }
     //возврат цвета
-    QColor penColor() {
-        return selectedPenColor;
+    QColor penColor() const {
+        return myPenColor;
     }
-
-protected:
-    //отслеживание действий мыши
-    void mouseMoveEvent(QMouseEvent *event) override;//движение
-    void mousePressEvent(QMouseEvent *event) override;//нажатие
-    void mouseReleaseEvent(QMouseEvent *event) override;//отпустили кнопку мыши
-
-    void paintEvent(QPaintEvent *event) override;//событие риосоваение в области холста
-    void resizeEvent(QResizeEvent *event) override;//изменить размер
+    //возврат ширины
+    int penWidth() const {
+        return myPenWidth;
+    }
 
 public slots:
     //очистить содержимое
     void clearImage();
     //вывести содержимое
-    void output();
+    void print();
 
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+    void paintEvent(QPaintEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
+
+private:
+    void drawTo(const QPoint &endPoint);
+    void resizeImage(QImage *image, const QSize &newSize);
+
+    bool modified = false;
+    bool area = false;//Рисует ли пользователь на поверхности или нет
+    QColor myPenColor = Qt::green;//цвет пера
+    int myPenWidth = 1;//Начальная толщина пера
+    QImage image;//картина, которую пользователь нарисовал
+    QPoint lastPoint;//последняя позиция(точка)нахождения мыши
 };
-
-
 #endif // DRAWINGAREA_H
